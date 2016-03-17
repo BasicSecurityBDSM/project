@@ -10,10 +10,15 @@ namespace hybridEncryptor
     [TestFixture]
     class RsaEncyptor_tests
     {
+        private RsaEncryptor rsa;
+        [SetUp]
+        public void setup()
+        {
+            rsa = new RsaEncryptor();
+        }
         [Test]
         public void RsaEncrpytAndDecryptTest()
         {
-            RsaEncryptor rsa = new RsaEncryptor();
             UnicodeEncoding ByteConverter = new UnicodeEncoding();
             string privateKey = rsa.GetKey(true);
             string publicKey = rsa.GetKey(false);
@@ -28,7 +33,6 @@ namespace hybridEncryptor
         [Test]
         public void RsaKeyGenTest()
         {
-            RsaEncryptor rsa = new RsaEncryptor();
             string key1 = rsa.GetKey(true);
             rsa.generateNewKey();
             string key2 = rsa.GetKey(true);
