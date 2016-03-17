@@ -15,6 +15,10 @@ namespace hybridEncryptor
         {
             RSA = new RSACryptoServiceProvider();
         }
+        public void generateNewKey()
+        {
+            RSA = new RSACryptoServiceProvider();
+        }
         public string GetKey(bool includePrivate = false)
         {
             return RSA.ToXmlString(includePrivate);

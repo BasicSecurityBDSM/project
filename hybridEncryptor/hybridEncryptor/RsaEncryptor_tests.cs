@@ -25,5 +25,18 @@ namespace hybridEncryptor
             byte[] decrypted = rsa.Decrypt(encrypted);
             Assert.AreEqual(ByteConverter.GetString(decrypted), testString);
         }
+        [Test]
+        public void RsaKeyGenTest()
+        {
+            RsaEncryptor rsa = new RsaEncryptor();
+            string key1 = rsa.GetKey(true);
+            rsa.generateNewKey();
+            string key2 = rsa.GetKey(true);
+            rsa.generateNewKey();
+            string key3 = rsa.GetKey(true);
+            Assert.AreNotEqual(key1, key2);
+            Assert.AreNotEqual(key1, key3);
+            Assert.AreNotEqual(key2, key3);
+        }
     }
 }
