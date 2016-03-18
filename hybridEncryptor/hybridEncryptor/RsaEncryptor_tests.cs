@@ -24,8 +24,10 @@ namespace hybridEncryptor
             string publicKey = rsa.GetKey(false);
             string testString = "dit is een test string";
             byte[] dataToEncrypt = ByteConverter.GetBytes(testString);
+            rsa.generateNewKey();
             rsa.SetKey(publicKey);
             byte[] encrypted = rsa.Encrypt(dataToEncrypt);
+            rsa.generateNewKey();
             rsa.SetKey(privateKey);
             byte[] decrypted = rsa.Decrypt(encrypted);
             Assert.AreEqual(ByteConverter.GetString(decrypted), testString);

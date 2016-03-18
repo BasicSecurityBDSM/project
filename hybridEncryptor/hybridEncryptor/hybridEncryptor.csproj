@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesEncryptor.cs" />
+    <Compile Include="HybridEncryptor_tests.cs" />
     <Compile Include="RsaEncryptor_tests.cs" />
     <Compile Include="DesEncyptor_tests.cs" />
     <Compile Include="HybridEncryptor.cs" />

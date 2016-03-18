@@ -12,47 +12,102 @@ namespace hybridEncryptor
     {
         private DesEncryptor des;
         private RsaEncryptor rsa;
-        private SHA1 sha;
 
-        private byte[] byteFile;
-        private string stringFile;
-
-        private byte[] encryptedFile;
-        private byte[] encryptedDesKey;
-        private byte[] encryptedDesIV;
-
-        private byte[] fileHash;
-        private byte[] encryptedHash;
         public HybridEncryptor()
         {
             des = new DesEncryptor();
             rsa = new RsaEncryptor();
+            
         }
-        public void SetFileName(string filename)
-        {
-            byteFile = File.ReadAllBytes(filename);
-            stringFile = byteFile.ToString();
-        }
-        public void Encrypt(string publicOntvanger,string privateZender)
+        public EncryptedFile Encrypt(byte[] fileToEncrypt,string publicOther,string privateMe)
         {
             //encrypt file
-            encryptedFile = des.Encrpyt(stringFile);
+            string stringFile = Convert.ToBase64String(fileToEncrypt);
+            byte[] file = des.Encrpyt(stringFile);
             //encrypt keys
-            rsa.SetKey(publicOntvanger);
-            encryptedDesKey = rsa.Encrypt(des.GetKey());
-            encryptedDesIV = rsa.Encrypt(des.GetIV());
+            rsa.SetKey(publicOther);
+            byte[] desKey = rsa.Encrypt(des.GetKey());
+            byte[] desIV = rsa.Encrypt(des.GetIV());
             //encrypt hash
-            fileHash = sha.ComputeHash(byteFile);
-            rsa.SetKey(privateZender);
-            encryptedHash = rsa.Encrypt(fileHash);
+            rsa.SetKey(privateMe);
+            byte[] hash = SHA1.Create().ComputeHash(fileToEncrypt);
+            hash = rsa.Encrypt(hash);
+            //return file
+            return new EncryptedFile(file,desKey,desIV,hash);
         }
-        public string GetEncryptedFile()
+        public DecryptedFile Decrypt(EncryptedFile fileToDecrypt,string publicOther,string privateMe)
         {
-            return encryptedFile.ToString();
+            //decrypt keys
+            rsa.SetKey(privateMe);
+            byte[] desKey = rsa.Decrypt(fileToDecrypt.GetDesKey());
+            byte[] desIV = rsa.Decrypt(fileToDecrypt.GetDesIV());
+            //decrypt file
+            des.SetKey(desKey);
+            des.SetIV(desIV);
+            string stringFile = des.Decrpyt(fileToDecrypt.GetFile());
+            byte[] file = Convert.FromBase64String(stringFile);
+            //decrypt hash
+            rsa.SetKey(publicOther);
+            byte[] hash = rsa.Decrypt(fileToDecrypt.GetHash());
+            return new DecryptedFile(file,hash);
+
         }
-        public string GetEncryptedHash()
+        public void GenerateRsaKey()
         {
-            return encryptedHash.ToString();
+            rsa.generateNewKey();
+        }
+        public string GetRsaKey(bool includePrivate = false)
+        {
+            return rsa.GetKey(includePrivate);
+        }
+        public class EncryptedFile
+        {
+            private byte[] file;
+            private byte[] desKey;
+            private byte[] desIV;
+            private byte[] hash;
+            public EncryptedFile(byte[] file, byte[] desKey,byte[] desIV, byte[] hash)
+            {
+                this.file = file;
+                this.desKey = desKey;
+                this.desIV = desIV;
+                this.hash = hash;
+            }
+            public byte[] GetFile()
+            {
+                return file;
+            }
+            public byte[] GetDesKey()
+            {
+                return desKey;
+            }
+            public byte[] GetDesIV()
+            {
+                return desIV;
+            }
+            public byte[] GetHash()
+            {
+                return hash;
+            }
+        }
+        public class DecryptedFile
+        {
+            private byte[] file;
+            private byte[] hash;
+            public DecryptedFile(byte[] file, byte[] hash)
+            {
+                this.file = file;
+                this.hash = hash;
+            }
+            public byte[] GetFile()
+            {
+                return file;
+            }
+            public bool CompareHash(byte[] fileToCompare)
+            {
+                byte[] compare = SHA1.Create().ComputeHash(fileToCompare);
+                return (compare.SequenceEqual(hash));
+            }
         }
     }
 }
