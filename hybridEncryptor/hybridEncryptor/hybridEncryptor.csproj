@@ -44,13 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DesEncryptor.cs" />
-    <Compile Include="HybridEncryptor_tests.cs" />
-    <Compile Include="RsaEncryptor_tests.cs" />
-    <Compile Include="DesEncyptor_tests.cs" />
-    <Compile Include="HybridEncryptor.cs" />
+    <Compile Include="files\DecryptedFile.cs" />
+    <Compile Include="encryptors\des\DesEncryptor.cs" />
+    <Compile Include="files\EncryptedFile.cs" />
+    <Compile Include="files\File.cs" />
+    <Compile Include="files\File_Tests.cs" />
+    <Compile Include="encryptors\hybrid\HybridEncryptor_tests.cs" />
+    <Compile Include="encryptors\rsa\RsaEncryptor_tests.cs" />
+    <Compile Include="encryptors\des\DesEncyptor_tests.cs" />
+    <Compile Include="encryptors\hybrid\HybridEncryptor.cs" />
+    <Compile Include="files\txt\TxtEncryptedFile.cs" />
+    <Compile Include="files\txt\TxtFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RsaEncryptor.cs" />
+    <Compile Include="encryptors\rsa\RsaEncryptor.cs" />
+    <Compile Include="files\wav\WavEncryptedFile.cs" />
+    <Compile Include="files\wav\WavFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -58,6 +66,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
