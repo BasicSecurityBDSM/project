@@ -62,10 +62,10 @@ namespace hybridEncryptor
         }
         public void save(string path)
         {
-            wavFile.Save(path + "/wavFile.wav");
-            wavDesKey.Save(path + "/wavDesKey.wav");
-            wavDesIV.Save(path + "/wavDesIV.wav");
-            wavHash.Save(path + "/wavHash.wav");
+            wavFile.Save(path + "\\wavFile.wav");
+            wavDesKey.Save(path + "\\wavDesKey.wav");
+            wavDesIV.Save(path + "\\wavDesIV.wav");
+            wavHash.Save(path + "\\wavHash.wav");
         }
     }
 }

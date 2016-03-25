@@ -75,5 +75,27 @@ namespace hybridEncryptor
             Assert.IsTrue(decrypted.CompareHash(testFile));
             Assert.AreEqual(testFile, decrypted.GetFile());
         }
+        [Test]
+        public void HybridEncryptAndDecrypt_hash_txtFile_SaveAndLoad()
+        {
+            string testString = "dit is een teststring";
+            byte[] testFile = Encoding.ASCII.GetBytes(testString);
+            string senderPrivate = hybrid.GetRsaKey(true);
+            string senderPublic = hybrid.GetRsaKey();
+            hybrid.GenerateRsaKey();
+            string recieverPrivate = hybrid.GetRsaKey(true);
+            string recieverPublic = hybrid.GetRsaKey();
+
+            TxtEncryptedFile encryptedS;
+            encryptedS = TxtEncryptedFile.FromEncryptedFile(hybrid.Encrypt(testFile, recieverPublic, senderPrivate));
+            encryptedS.save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            TxtEncryptedFile encryptedL;
+            encryptedL = new TxtEncryptedFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            DecryptedFile decrypted;
+            decrypted = hybrid.Decrypt(encryptedL, senderPrivate, recieverPrivate);
+
+            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.AreEqual(testFile, decrypted.GetFile());
+        }
     }
 }
