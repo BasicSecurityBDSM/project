@@ -74,4 +74,5 @@ Mislukte exploits:
 - samba -> usermapscript
 - smb -> ms08_067_netapi
 - smb -> netidentity_xtierrpcpipe
-
+- smb -> timbuktu_plughntcommand_bof
+- smb -> pass the hash
