@@ -62,17 +62,19 @@ Ernst: Kritiek
 Beschrijving: Het wachtwoord van de VNC server is zeer zwak. Onze vulnerability scanner Nessus was in staat om in te loggen met VNC authentication en het wachtwoord 'password'. Zo is het natuurlijk gemakkelijk voor een aanvaller om binnen te geraken.
 Oplossing: Verander het wachtwoord in een sterker wachtwoord.
 
-##Armitage op Windows XP
+##Armitage op Metasploitable
 
-Gelukte exploits:
-- smb -> ipass_pipe_exec
-- smb -> ms10_061_spoolss
+Doen allemaal hetzelfde:
+- irc/unreal_ircd_3281_backdoor
+- ftp/vsftpd_234_backdoor
+- http/php_cgi_arg_injection
+- misc/drb_remote_codeexec
+- samba/usermap_script
+- misc/distcc_exec
+- misc/java_rmi_server
 
-Mislukte exploits:
-- dcerpc -> ms03_026_dcom
-- oracle -> extjob
-- samba -> usermapscript
-- smb -> ms08_067_netapi
-- smb -> netidentity_xtierrpcpipe
-- smb -> timbuktu_plughntcommand_bof
-- smb -> pass the hash
+Beschrijvingen vulnerabilities:
+
+ftp/vsftpd_234_backdoor:
+Een backdoor die is toegevoegd in de VSFTPD download archive ()
+
