@@ -76,5 +76,38 @@ Doen allemaal hetzelfde:
 Beschrijvingen vulnerabilities:
 
 ftp/vsftpd_234_backdoor:
-Een backdoor die is toegevoegd in de VSFTPD download archive ()
+Een backdoor die is toegevoegd in de VSFTPD download archive (ftp voor unix-like systemen). In juli 2011 was een downloadbare versie was gecomprommitteerd en iemand had een versie met backdoor geupload.
+Een backdoor is een vaak geheime methode om normale authenticatie te omzeilen en remote control te hebben over het systeem.
 
+nog voorbeelden van backdoor:
+- irc/unreal_ircd_3281_backdoor
+- ftp/proftpd_133c_backdoor
+
+ssh/symantec_smg_ssh:
+Omvat een default misconfiguratie in de Symantec Messaging Gateway. De user "support" heeft een gekend default wachtwoord en kan gebruikt worden om in de SSH in te loggen en remote access te verkrijgen.
+
+php/cakephp_cache_corruption:
+CakePHP is een populair PHP framework om web applicaties te bouwen. De versie 1.3.5 en eerder is kwetsbaar voor een attack die uitgevoerd kan worden om ongeauthorizeerde aanvallers code te laten uitvoeren die kwetsbaar is met de permissies van de webserver zelf
+
+misc/legend_bot_exec:
+module die remote command execution exploiteert op een legend perl irc bot (is eigenlijk niets meer van te vinden online). Deze bot heeft functionaliteiten zoals nmap scanning, tcp, http, sql en udp flooding, kan system logs verwijderen, root access verkrijgen en vnc scanning (virtual network computing, bureaublad delen).
+
+wyse/hagent_untrusted_hsdata:
+Module die de Wyse Rapport Agent service exploit en zich voordoet als een legitieme server. De attacker start allebei de HTTP en FTP services, contacteert de hagent service van het doelsysteem en zegt dan dat er zogezegd een update is. In die update zit dan de payload. (Ondertussen Dell Wyse)
+
+##OpenVAS op Windows XP SP1
+
+- Vulnerabilities in SMB Could Allow Remote Code Execution
+Ernst: kritiek
+Beschrijving: Als de exploit lukt kan het remote ongeverifiëerde aanvallers er tot in staat stellen om de server service te doen stoppen door een speciaal netwerk bericht te sturen naar een systeem die de service service runt.
+Oplossing: Windows update 
+
+- Microsoft Windows SMG Server NTLM Multiple vulnerabilities
+Ernst: kritiek
+Beschrijving: Als de exploit lukt kan het de remote ongeverifiëerde aanvaller er tot in staat stellen om code uit te voeren, een denial of service uit te voeren of langs het authenticatie mechanisme te geraken via brute force technieken
+Oplossing: Windows update
+
+- DCE Services Enumeratioin (x2)
+Ernst: medium
+Beschrijving: Door te connecteren op poort 135 en juiste queries uit te voeren kan de aanvaller meer informatie bemachtigen over de remote host
+Oplossing: Traffic filteren op deze poort
