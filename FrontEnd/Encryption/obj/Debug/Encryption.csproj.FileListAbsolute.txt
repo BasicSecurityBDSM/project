@@ -34,3 +34,5 @@ C:\Users\11400394\Documents\PXL\Basic Security\Project\project\FrontEnd\Encrypti
 C:\Users\11400394\Documents\PXL\Basic Security\Project\project\FrontEnd\Encryption\obj\Debug\Encryption.g.resources
 C:\Users\11400394\Documents\PXL\Basic Security\Project\project\FrontEnd\Encryption\obj\Debug\Encryption.Properties.Resources.resources
 C:\Users\11400394\Documents\PXL\Basic Security\Project\project\FrontEnd\Encryption\obj\Debug\Encryption.csproj.GenerateResource.Cache
+C:\Users\11400394\Documents\PXL\Basic Security\Project\project\FrontEnd\Encryption\obj\Debug\UploadMessage.g.cs
+C:\Users\11400394\Documents\PXL\Basic Security\Project\project\FrontEnd\Encryption\obj\Debug\UploadMessage.baml

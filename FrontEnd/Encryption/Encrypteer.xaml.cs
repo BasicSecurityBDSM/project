@@ -79,5 +79,12 @@ namespace Encryption
             this.Close();
             window.Show();
         }
+
+        private void btn_volgende_Click(object sender, RoutedEventArgs e)
+        {
+            UploadMessage window = new UploadMessage();
+            this.Close();
+            window.Show();
+        }
     }
 }
