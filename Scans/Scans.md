@@ -1,20 +1,10 @@
 # Project Basic Security - S&B gedeelte
 
-## Advanced scan
+## Advanced scan op Windows XP
 
 ### Met firewall
 
-- Nessus scan information:  
-Ernst: Info
-
-
-- VMWare Virtual Machine Detection:  
-Ernst: Info
-
-
-- Ethernet Card Manufacturer Detection:  
-Ernst: Info
-
+- Geen vulnerabilities, enkel infos.
 
 ### Zonder firewall
 
@@ -45,74 +35,46 @@ Ernst: Laag
 Beschrijving: De remote host maakt gebruik van een netwerk stuurprogramma dat ethernet frames opvult met gegevens die variëren van het ene pakket tot een andere wat waarschijnlijk afkomstig is uit het kernel geheugen, systeemgeheugen naar het stuurprogramma, of een hardware buffer op zijn netwerk interface-kaart toegewezen. Dit kan een potentiële aanvaller in staat steller om gevoelige data te verzamelen van de host op de voorwaarde dat hij zich op hetzelfde fysieke subnet bevindt als de host.
 Oplossing: Contacteer de verkoper van de driver van het netwerkapparaat.
 
-- ICMP Timestamp Request Remote Date Disclosure
-Ernst: Info
+##Advanced scan op Metasploitable
 
+- Debian OpenSSH/OpenSSL Package Random Number Generator Weakness (SSL check)
+Ernst: Kritiek
+Beschrijving: Er zit een bug in de random number generator die de remote x509 certificaat genereert. Dit probleem ontstaat door een Debian packager die bijna alle bronnen van entropie verwijdert. Hierdoor kan een mogelijke aanvaller zeer gemakkelijk aan het deel van de remote sleutel komen die eigenlijk privé moet blijven. Hiermee kan hij dan de remote sessie ontcijferen of een "man in the middle attack" uitvoeren.
+Oplossing: Ga ervan uit dat al het cryptografisch materiaal op de remote host raadbaar is. Dan moet je dus al de SSH, SSL en OpenVPN sleutels hergenereren.
 
-- Windows NetBIOS / SMB Remote Host Information Disclosure
-Ernst: Info
+- rexecd Service Detection
+Ernst: Kritiek
+Beschrijving: De rexecd service zorgt ervoor dat gebruikers van een bepaald netwerk commands remotely can uitvoeren. In dit geval voorziet rexecd geen goede authenticatie van de gebruiker, en kan dus misbruikt worden door een aanvaller om een third-party host the scannen.
+Oplossing: Zet de 'exec' regel in /etc/inetd.conf in commentaar en herstart het inetd proces.
 
+- Rogue Shell Backdoor Detection
+Ernst: kritiek
+Beschrijving: Een shell is aan het "luisteren" op de remote port. Een aanvaller kan dit misbruiken door te connecteren met deze remote port en commands rechtstreeks te sturen.
+Oplossing: Kijk na of de remote host is gecompromitteerd, en herinstalleer het systeem indien nodig.
 
-- Traceroute Information
-Ernst: Info
+- Unsupported Unix Operating System
+Ernst: Kritiek
+Beschrijving: Als we naar de versie van de OS kijken, wordt die eigenlijk niet meer ondersteund. Aangezien deze versie niet meer ondersteund wordt, worden er ook geen security patches meer uitgegeven en zullen er over tijd meer en meer kwetsbaarheden ontstaan.
+Oplossing: Upgrade naar een meer recentere versie die wel ondersteund wordt.
 
+- VNC Server 'password' Password
+Ernst: Kritiek
+Beschrijving: Het wachtwoord van de VNC server is zeer zwak. Onze vulnerability scanner Nessus was in staat om in te loggen met VNC authentication en het wachtwoord 'password'. Zo is het natuurlijk gemakkelijk voor een aanvaller om binnen te geraken.
+Oplossing: Verander het wachtwoord in een sterker wachtwoord.
 
-- Microsoft Windows SMB Log In Possible
-Ernst: Info
+##Armitage op Metasploitable
 
+Doen allemaal hetzelfde:
+- irc/unreal_ircd_3281_backdoor
+- ftp/vsftpd_234_backdoor
+- http/php_cgi_arg_injection
+- misc/drb_remote_codeexec
+- samba/usermap_script
+- misc/distcc_exec
+- misc/java_rmi_server
 
-- Microsoft Windows SMB LanMan Pipe Server Listing Disclosure
-Ernst: Info
+Beschrijvingen vulnerabilities:
 
-
-- Microsoft Windows SMB NativeLanManager Remote System Information Disclosure
-Ernst: Info
-
-
-- Network Time Protocol (NTP) Server Detection
-Ernst: Info
-
-
-- Microsoft Windows SMB Service Detection
-Ernst: Info
-
-
-- Nessus SYN scanner
-Ernst: Info
-
-
-- OS Identification
-Ernst: Info
-
-
-- Nessus Scan Information
-Ernst: Info
-
-
-- VMware Virtual Machine Detection
-Ernst: Info
-
-
-- Nessus Windows Scan Not Performed with Admin Privileges
-Ernst: Info
-
-
-- TCP/IP Timestamps Supported
-Ernst: Info
-
-
-- Microsoft Windows SMB Registry : Nessus Cannot Access the Windows Registry
-Ernst: Info
-
-
-- Ethernet Card Manufacturer Detection
-Ernst: Info
-
-
-- Common Platform Enumeration (CPE)
-Ernst: Info
-
-
-- Device Type
-Ernst: Info
+ftp/vsftpd_234_backdoor:
+Een backdoor die is toegevoegd in de VSFTPD download archive ()
 
