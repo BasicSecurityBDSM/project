@@ -1,6 +1,6 @@
 # Project Basic Security - S&B gedeelte
 
-## Advanced scan op Windows XP
+## Nessus op Windows XP
 
 ### Met firewall
 
@@ -25,7 +25,7 @@ Set:
 Verwijder BROWSER uit:  
 - HKLM\SYSTEM\CurrentControlSet\Services\lanmanserver\parameters\NullSessionPipes  
 
-- SMB Signing Disabled  
+- SMB Signing Disabled   (enkel windows server)
 Ernst: Gemiddeld
 Beschrijving: Ondertekening is niet vereist op de externe SMB-server. Een niet-geverifieerde, externe aanvaller kan deze benutten om man-in-the-middle-aanvallen tegen de SMB-server uit te voeren.  
 Oplossing: Dwing bericht ondertekening af in de configuratie van de host. Op Windows is deze te vinden in de beleid instelling 'Microsoft netwerkserver: altijd digitaal ondertekenen'.  
@@ -35,7 +35,7 @@ Ernst: Laag
 Beschrijving: De remote host maakt gebruik van een netwerk stuurprogramma dat ethernet frames opvult met gegevens die variëren van het ene pakket tot een andere wat waarschijnlijk afkomstig is uit het kernel geheugen, systeemgeheugen naar het stuurprogramma, of een hardware buffer op zijn netwerk interface-kaart toegewezen. Dit kan een potentiële aanvaller in staat steller om gevoelige data te verzamelen van de host op de voorwaarde dat hij zich op hetzelfde fysieke subnet bevindt als de host.
 Oplossing: Contacteer de verkoper van de driver van het netwerkapparaat.
 
-##Advanced scan op Metasploitable
+##Nessus op Metasploitable
 
 - Debian OpenSSH/OpenSSL Package Random Number Generator Weakness (SSL check)
 Ernst: Kritiek
@@ -61,6 +61,45 @@ Oplossing: Upgrade naar een meer recentere versie die wel ondersteund wordt.
 Ernst: Kritiek
 Beschrijving: Het wachtwoord van de VNC server is zeer zwak. Onze vulnerability scanner Nessus was in staat om in te loggen met VNC authentication en het wachtwoord 'password'. Zo is het natuurlijk gemakkelijk voor een aanvaller om binnen te geraken.
 Oplossing: Verander het wachtwoord in een sterker wachtwoord.
+
+##OpenVAS op Windows XP SP1
+
+- Vulnerabilities in SMB Could Allow Remote Code Execution
+Ernst: kritiek
+Beschrijving: Als de exploit lukt kan het remote ongeverifiëerde aanvallers er tot in staat stellen om de server service te doen stoppen door een speciaal netwerk bericht te sturen naar een systeem die de service service runt.
+Oplossing: Windows update 
+
+- Microsoft Windows SMG Server NTLM Multiple vulnerabilities
+Ernst: kritiek
+Beschrijving: Als de exploit lukt kan het de remote ongeverifiëerde aanvaller er tot in staat stellen om code uit te voeren, een denial of service uit te voeren of langs het authenticatie mechanisme te geraken via brute force technieken
+Oplossing: Windows update
+
+- DCE Services Enumeratioin (x2)
+Ernst: medium
+Beschrijving: Door te connecteren op poort 135 en juiste queries uit te voeren kan de aanvaller meer informatie bemachtigen over de remote host
+Oplossing: Traffic filteren op deze poort
+
+##OpenVAS op Metasploitable
+
+- X Server
+Ernst: kritiek
+Beschrijving: X11 is een client-server protocol en heeft de leiding over het scherm. De clients connecteren ermee en sturen verschillende requests zoals het showen van een window of menu. De server stuurt events terug naar de client, zoals een muisklik, of een toetsaanslag. Een X server die niet fatsoenlijk is geconfigureerd accepteerd van eender welke client. Dit stelt een aanvaller er tot in staat om te connecteren met de X server en toetsaanslagen te recorden.
+Oplossing: Connecties op poort 6000-6009 filteren
+
+- ProFTPD Multiple Remote Vulnerabilities (x2)
+Ernst: kritiek
+Beschrijving: Als de exploit lukt, kan er willekeurige code uitgevoerd worden, of een dos veroorzaakt worden.
+Oplossing: Upgrade naar ProFTPD version 1.3.3c
+
+- Possible Backdoor: ingreslock
+Ernst: kritiek
+Beschrijving: Een backdoor is geïnstalleerd op de remote host. Aanvallers kunnen dit probleem exploiteren om willekeurige commands uit te voeren in context van de applicatie.
+Oplossing: /etc/inetd.conf restoren, ongeauthorizeerde configuratie files verwijderen (bvb /tmp/bob) en het inetd proces herstarten.
+
+- distcc Remote Code Execution Vulnerability
+Ernst: kritiek
+Beschrijving: distcc 2.x stelt remote aanvallers er tot in staat om willekeurige commands uit te voeren door de server zonder authorizatie checks, als de server zo is ingesteld dat de de access tot de server port te beperken.
+Oplossing: Updates van de verkoper uitvoeren.
 
 ##Armitage op Metasploitable
 
@@ -95,19 +134,16 @@ module die remote command execution exploiteert op een legend perl irc bot (is e
 wyse/hagent_untrusted_hsdata:
 Module die de Wyse Rapport Agent service exploit en zich voordoet als een legitieme server. De attacker start allebei de HTTP en FTP services, contacteert de hagent service van het doelsysteem en zegt dan dat er zogezegd een update is. In die update zit dan de payload. (Ondertussen Dell Wyse)
 
-##OpenVAS op Windows XP SP1
+##Armitage op Windows XP SP1
+Werkend:
+dcerpc/ms03_023_dcom (misbruikt een stack buffer overflow in de RPCSS service) (oplossing: upgraden)
+smb/ms08_067_netapi (misbruikt een parsing flaw in het path canonicalization (standaardisatie) van netapi32.dll) (oplossing: upgraden)
 
-- Vulnerabilities in SMB Could Allow Remote Code Execution
-Ernst: kritiek
-Beschrijving: Als de exploit lukt kan het remote ongeverifiëerde aanvallers er tot in staat stellen om de server service te doen stoppen door een speciaal netwerk bericht te sturen naar een systeem die de service service runt.
-Oplossing: Windows update 
-
-- Microsoft Windows SMG Server NTLM Multiple vulnerabilities
-Ernst: kritiek
-Beschrijving: Als de exploit lukt kan het de remote ongeverifiëerde aanvaller er tot in staat stellen om code uit te voeren, een denial of service uit te voeren of langs het authenticatie mechanisme te geraken via brute force technieken
-Oplossing: Windows update
-
-- DCE Services Enumeratioin (x2)
-Ernst: medium
-Beschrijving: Door te connecteren op poort 135 en juiste queries uit te voeren kan de aanvaller meer informatie bemachtigen over de remote host
-Oplossing: Traffic filteren op deze poort
+Niet werkend:
+oracle/extjob (not vulnerable)
+samba/usermap_script (not responding)
+smb/ipass_pipe_exec (status_access_denied)
+smb/ms10_061_spoolss (status_access_denied)
+smb/netidentity_xtierrpcpipe (status_access_denied)
+smb/timbuktu_plughntcommand_bof (status_access_denied)
+smb/pass the hash (unknown command)
