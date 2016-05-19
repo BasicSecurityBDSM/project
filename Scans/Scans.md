@@ -147,4 +147,3 @@ Oplossing: /etc/inetd.conf restoren, ongeauthorizeerde configuratie files verwij
 Ernst: kritiek
 Beschrijving: distcc 2.x stelt remote aanvallers er tot in staat om willekeurige commands uit te voeren door de server zonder authorizatie checks, als de server zo is ingesteld dat de de access tot de server port te beperken.
 Oplossing: Updates van de verkoper uitvoeren.
-
