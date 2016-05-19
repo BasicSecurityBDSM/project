@@ -25,7 +25,7 @@ Set:
 Verwijder BROWSER uit:  
 - HKLM\SYSTEM\CurrentControlSet\Services\lanmanserver\parameters\NullSessionPipes  
 
-- SMB Signing Disabled  
+- SMB Signing Disabled   (enkel windows server)
 Ernst: Gemiddeld
 Beschrijving: Ondertekening is niet vereist op de externe SMB-server. Een niet-geverifieerde, externe aanvaller kan deze benutten om man-in-the-middle-aanvallen tegen de SMB-server uit te voeren.  
 Oplossing: Dwing bericht ondertekening af in de configuratie van de host. Op Windows is deze te vinden in de beleid instelling 'Microsoft netwerkserver: altijd digitaal ondertekenen'.  
@@ -95,6 +95,20 @@ module die remote command execution exploiteert op een legend perl irc bot (is e
 wyse/hagent_untrusted_hsdata:
 Module die de Wyse Rapport Agent service exploit en zich voordoet als een legitieme server. De attacker start allebei de HTTP en FTP services, contacteert de hagent service van het doelsysteem en zegt dan dat er zogezegd een update is. In die update zit dan de payload. (Ondertussen Dell Wyse)
 
+##Armitage op Windows XP SP1
+Werkend:
+dcerpc/ms03_023_dcom (misbruikt een stack buffer overflow in de RPCSS service) (oplossing: upgraden)
+smb/ms08_067_netapi (misbruikt een parsing flaw in het path canonicalization (standaardisatie) van netapi32.dll) (oplossing: upgraden)
+
+Niet werkend:
+oracle/extjob (not vulnerable)
+samba/usermap_script (not responding)
+smb/ipass_pipe_exec (status_access_denied)
+smb/ms10_061_spoolss (status_access_denied)
+smb/netidentity_xtierrpcpipe (status_access_denied)
+smb/timbuktu_plughntcommand_bof (status_access_denied)
+smb/pass the hash (unknown command)
+
 ##OpenVAS op Windows XP SP1
 
 - Vulnerabilities in SMB Could Allow Remote Code Execution
@@ -111,3 +125,26 @@ Oplossing: Windows update
 Ernst: medium
 Beschrijving: Door te connecteren op poort 135 en juiste queries uit te voeren kan de aanvaller meer informatie bemachtigen over de remote host
 Oplossing: Traffic filteren op deze poort
+
+##OpenVAS op Metasploitable
+
+- X Server
+Ernst: kritiek
+Beschrijving: X11 is een client-server protocol en heeft de leiding over het scherm. De clients connecteren ermee en sturen verschillende requests zoals het showen van een window of menu. De server stuurt events terug naar de client, zoals een muisklik, of een toetsaanslag. Een X server die niet fatsoenlijk is geconfigureerd accepteerd van eender welke client. Dit stelt een aanvaller er tot in staat om te connecteren met de X server en toetsaanslagen te recorden.
+Oplossing: Connecties op poort 6000-6009 filteren
+
+- ProFTPD Multiple Remote Vulnerabilities (x2)
+Ernst: kritiek
+Beschrijving: Als de exploit lukt, kan er willekeurige code uitgevoerd worden, of een dos veroorzaakt worden.
+Oplossing: Upgrade naar ProFTPD version 1.3.3c
+
+- Possible Backdoor: ingreslock
+Ernst: kritiek
+Beschrijving: Een backdoor is geïnstalleerd op de remote host. Aanvallers kunnen dit probleem exploiteren om willekeurige commands uit te voeren in context van de applicatie.
+Oplossing: /etc/inetd.conf restoren, ongeauthorizeerde configuratie files verwijderen (bvb /tmp/bob) en het inetd proces herstarten.
+
+- distcc Remote Code Execution Vulnerability
+Ernst: kritiek
+Beschrijving: distcc 2.x stelt remote aanvallers er tot in staat om willekeurige commands uit te voeren door de server zonder authorizatie checks, als de server zo is ingesteld dat de de access tot de server port te beperken.
+Oplossing: Updates van de verkoper uitvoeren.
+
