@@ -54,6 +54,46 @@ namespace hybridEncryptor
             Assert.AreEqual(testFile, decrypted.GetFile());
         }
         [Test]
+        public void HybridEncryptAndDecrypt_hash_txtFile()
+        {
+            string testString = "dit is een teststring";
+            byte[] testFile = Encoding.ASCII.GetBytes(testString);
+            string senderPrivate = hybrid.GetRsaKey(true);
+            string senderPublic = hybrid.GetRsaKey();
+            hybrid.GenerateRsaKey();
+            string recieverPrivate = hybrid.GetRsaKey(true);
+            string recieverPublic = hybrid.GetRsaKey();
+
+            TxtEncryptedFile encrypted;
+            encrypted = TxtEncryptedFile.FromEncryptedFile(hybrid.Encrypt(testFile, recieverPublic, senderPrivate));
+
+            DecryptedFile decrypted;
+            decrypted = hybrid.Decrypt(encrypted, senderPrivate, recieverPrivate);
+
+            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.AreEqual(testFile, decrypted.GetFile());
+        }
+        [Test]
+        public void HybridEncryptAndDecrypt_hash_imgFile()
+        {
+            string testString = "dit is een teststring";
+            byte[] testFile = Encoding.ASCII.GetBytes(testString);
+            string senderPrivate = hybrid.GetRsaKey(true);
+            string senderPublic = hybrid.GetRsaKey();
+            hybrid.GenerateRsaKey();
+            string recieverPrivate = hybrid.GetRsaKey(true);
+            string recieverPublic = hybrid.GetRsaKey();
+
+            ImgEncryptedFile encrypted;
+            encrypted = ImgEncryptedFile.FromEncryptedFile(hybrid.Encrypt(testFile, recieverPublic, senderPrivate));
+
+            DecryptedFile decrypted;
+            decrypted = hybrid.Decrypt(encrypted, senderPrivate, recieverPrivate);
+
+            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.AreEqual(testFile, decrypted.GetFile());
+        }
+        [Test]
         public void HybridEncryptAndDecrypt_hash_wavFile_SaveAndLoad()
         {
             string testString = "dit is een teststring";
@@ -91,6 +131,28 @@ namespace hybridEncryptor
             encryptedS.save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
             TxtEncryptedFile encryptedL;
             encryptedL = new TxtEncryptedFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            DecryptedFile decrypted;
+            decrypted = hybrid.Decrypt(encryptedL, senderPrivate, recieverPrivate);
+
+            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.AreEqual(testFile, decrypted.GetFile());
+        }
+        [Test]
+        public void HybridEncryptAndDecrypt_hash_imgFile_SaveAndLoad()
+        {
+            string testString = "dit is een teststring";
+            byte[] testFile = Encoding.ASCII.GetBytes(testString);
+            string senderPrivate = hybrid.GetRsaKey(true);
+            string senderPublic = hybrid.GetRsaKey();
+            hybrid.GenerateRsaKey();
+            string recieverPrivate = hybrid.GetRsaKey(true);
+            string recieverPublic = hybrid.GetRsaKey();
+
+            ImgEncryptedFile encryptedS;
+            encryptedS = ImgEncryptedFile.FromEncryptedFile(hybrid.Encrypt(testFile, recieverPublic, senderPrivate));
+            encryptedS.save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            ImgEncryptedFile encryptedL;
+            encryptedL = new ImgEncryptedFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encryptedL, senderPrivate, recieverPrivate);
 

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace hybridEncryptor
@@ -26,8 +27,14 @@ namespace hybridEncryptor
             byte[] file = des.Encrpyt(stringFile);
             //encrypt keys
             rsa.SetKey(OtherPublicKey);
-            byte[] desKey = rsa.Encrypt(des.GetKey());
-            byte[] desIV = rsa.Encrypt(des.GetIV());
+            byte[] desKey = null;
+            Thread desKeyThread = new Thread(() => desKey = rsa.Encrypt(des.GetKey()));
+            desKeyThread.Start();
+            byte[] desIV = null;
+            Thread desIVThread = new Thread(() => desIV = rsa.Encrypt(des.GetIV()));
+            desIVThread.Start();
+            desKeyThread.Join();
+            desIVThread.Join();
             //encrypt hash
             rsa.SetKey(OwnPrivateKey);
             byte[] hash = SHA1.Create().ComputeHash(fileToEncrypt);
@@ -39,8 +46,14 @@ namespace hybridEncryptor
         {
             //decrypt keys
             rsa.SetKey(OwnPrivateKey);
-            byte[] desKey = rsa.Decrypt(fileToDecrypt.GetDesKey());
-            byte[] desIV = rsa.Decrypt(fileToDecrypt.GetDesIV());
+            byte[] desKey = null;
+            Thread desKeyThread = new Thread(() => desKey = rsa.Decrypt(fileToDecrypt.GetDesKey()));
+            desKeyThread.Start();
+            byte[] desIV = null;
+            Thread desIVThread = new Thread(() => desIV = rsa.Decrypt(fileToDecrypt.GetDesIV()));
+            desIVThread.Start();
+            desKeyThread.Join();
+            desIVThread.Join();
             //decrypt file
             des.SetKey(desKey);
             des.SetIV(desIV);

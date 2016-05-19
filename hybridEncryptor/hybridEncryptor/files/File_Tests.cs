@@ -31,6 +31,16 @@ namespace hybridEncryptor
             Assert.AreEqual(outFile, testFile);
         }
         [Test]
+        public void ImgFileData()
+        {
+            string testString = "dit is een teststring";
+            byte[] testFile = Encoding.ASCII.GetBytes(testString);
+            ImgFile img = new ImgFile();
+            img.Generate(testFile);
+            byte[] outFile = img.GetData();
+            Assert.AreEqual(outFile, testFile);
+        }
+        [Test]
         public void WavFileData_SaveAndLoad()
         {
             string testString = "dit is een teststring";
@@ -54,6 +64,19 @@ namespace hybridEncryptor
             TxtFile txtL = new TxtFile();
             txtL.Load(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/testFile.txt");
             byte[] outFile = txtL.GetData();
+            Assert.AreEqual(outFile, testFile);
+        }
+        [Test]
+        public void ImgFileData_SaveAndLoad()
+        {
+            string testString = "dit is een teststring";
+            byte[] testFile = Encoding.ASCII.GetBytes(testString);
+            ImgFile imgS = new ImgFile();
+            imgS.Generate(testFile);
+            imgS.Save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/testFile.bmp");
+            ImgFile imgL = new ImgFile();
+            imgL.Load(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/testFile.bmp");
+            byte[] outFile = imgL.GetData();
             Assert.AreEqual(outFile, testFile);
         }
     }
