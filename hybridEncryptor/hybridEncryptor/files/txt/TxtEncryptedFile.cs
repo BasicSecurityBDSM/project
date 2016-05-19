@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace hybridEncryptor
 {
-    class TxtEncryptedFile : EncryptedFile
+    public class TxtEncryptedFile : EncryptedFile
     {
         TxtFile txtFile;
         TxtFile txtDesKey;
