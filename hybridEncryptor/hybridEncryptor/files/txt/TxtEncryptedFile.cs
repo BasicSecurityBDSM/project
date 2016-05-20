@@ -85,7 +85,7 @@ namespace hybridEncryptor
         {
             return txtHash.GetData();
         }
-        public void save(string path)
+        public override void save(string path)
         {
             Thread txtFileThread = new Thread(() => txtFile.Save(path + "\\txtFile.txt"));
             Thread txtDesKeyThread = new Thread(() => txtDesKey.Save(path + "\\txtDesKey.txt"));

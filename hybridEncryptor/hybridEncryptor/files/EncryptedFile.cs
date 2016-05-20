@@ -35,5 +35,8 @@ namespace hybridEncryptor
         {
             return hash;
         }
+        public virtual void save(string path)
+        {
+        }
     }
 }

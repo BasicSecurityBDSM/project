@@ -85,7 +85,7 @@ namespace hybridEncryptor
         {
             return wavHash.GetData();
         }
-        public void save(string path)
+        public override void save(string path)
         {
             Thread wavFileThread = new Thread(() => wavFile.Save(path + "\\wavFile.wav"));
             Thread wavDesKeyThread = new Thread(() => wavDesKey.Save(path + "\\wavDesKey.wav"));

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace hybridEncryptor
 {
-    class ImgEncryptedFile : EncryptedFile
+    public class ImgEncryptedFile : EncryptedFile
     {
         ImgFile imgFile;
         ImgFile imgDesKey;
@@ -85,7 +85,7 @@ namespace hybridEncryptor
         {
             return imgHash.GetData();
         }
-        public void save(string path)
+        public override void save(string path)
         {
             Thread imgFileThread = new Thread(() => imgFile.Save(path + "\\imgFile.bmp"));
             Thread imgDesKeyThread = new Thread(() => imgDesKey.Save(path + "\\imgDesKey.bmp"));

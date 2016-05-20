@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using hybridEncryptor;
 namespace Encryption
 {
     /// <summary>
@@ -20,22 +20,24 @@ namespace Encryption
     /// </summary>
     public partial class MainWindow : Window
     {
+        HybridEncryptor encryptor;
         public MainWindow()
         { 
             InitializeComponent();
+            encryptor = new HybridEncryptor();
         }
 
         private void btn_encrypteer_Click(object sender, RoutedEventArgs e)
         {
-            Encrypteer window = new Encrypteer();
-            this.Close();
+            KeySelect window = new KeySelect(encryptor,true);
+           Close();
             window.Show();
         }
 
         private void btn_decrypteer_Click(object sender, RoutedEventArgs e)
         {
-            Decrypteer window = new Decrypteer();
-            this.Close();
+            KeySelect window = new KeySelect(encryptor,false);
+            Close();
             window.Show();
         }
     }

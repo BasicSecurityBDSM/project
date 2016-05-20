@@ -1,4 +1,4 @@
-﻿<Window x:Class="Encryption.UploadMessage"
+﻿<Window x:Class="Encryption.Encrypteer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,13 +8,13 @@
         Title="UploadMessage" Height="222.742" Width="316.054" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="btn_browse" Content="Selecteer een te encrypteren bestand" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" Height="30" Click="btn_browse_Click"/>
-        <ComboBox x:Name="cmb_enc" HorizontalAlignment="Left" Margin="116,55,0,0" VerticalAlignment="Top" Width="166" Height="26">
-            <ComboBoxItem x:Name="cmn_Bestand" Content="bestand" Selected="cmn_Bestand_Selected"/>
-            <ComboBoxItem x:Name="cmn_Audio" Content="audio bestand" Selected="cmn_Audio_Selected"/>
-            <ComboBoxItem x:Name="cmn_Foto" Content="foto" Selected="cmn_Foto_Selected"/>
+        <ComboBox x:Name="cmb_enc" HorizontalAlignment="Left" Margin="116,55,0,0" VerticalAlignment="Top" Width="166" Height="26" SelectionChanged="cmb_enc_SelectionChanged">
+            <ComboBoxItem x:Name="cmn_Text" Content="text"/>
+            <ComboBoxItem x:Name="cmn_Geluid" Content="geluid"/>
+            <ComboBoxItem x:Name="cmn_Afbeelding" Content="afbeelding"/>
         </ComboBox>
         <Label x:Name="label" Content="Encrypteren als" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_encrypteer" Content="Encrypteer" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" Width="272" Height="46"/>
+        <Button x:Name="btn_encrypteer" Content="Encrypteer" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" Width="272" Height="46" Click="btn_encrypteer_Click"/>
         <Button x:Name="btn_vorige" Content="Vorige" HorizontalAlignment="Left" Margin="206,148,0,0" VerticalAlignment="Top" Width="76" Height="26" Click="btn_vorige_Click"/>
 
     </Grid>

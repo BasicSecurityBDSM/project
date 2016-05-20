@@ -57,14 +57,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UploadMessage.xaml.cs">
-      <DependentUpon>UploadMessage.xaml</DependentUpon>
+    <Compile Include="Encrypteer.xaml.cs">
+      <DependentUpon>Encrypteer.xaml</DependentUpon>
     </Compile>
     <Page Include="Decrypteer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Encrypteer.xaml">
+    <Page Include="KeySelect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -79,14 +79,14 @@
     <Compile Include="Decrypteer.xaml.cs">
       <DependentUpon>Decrypteer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Encrypteer.xaml.cs">
-      <DependentUpon>Encrypteer.xaml</DependentUpon>
+    <Compile Include="KeySelect.xaml.cs">
+      <DependentUpon>KeySelect.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UploadMessage.xaml">
+    <Page Include="Encrypteer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,6 +117,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\hybridEncryptor\hybridEncryptor\hybridEncryptor.csproj">
+      <Project>{ce540585-db6e-42a9-ab8f-10eb68889ff8}</Project>
+      <Name>hybridEncryptor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

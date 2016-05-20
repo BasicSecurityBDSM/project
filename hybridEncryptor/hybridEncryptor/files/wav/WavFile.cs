@@ -38,8 +38,8 @@ namespace hybridEncryptor
             header = new Chuncks.WaveHeader();
             format = new Chuncks.WaveFormatChunk();
             data = new Chuncks.WaveDataChunk();
-            uint amount = Convert.ToUInt16(bitsToInsert.Length);
-            uint numSamples = amount * 2;
+            int amount = Convert.ToInt32(bitsToInsert.Length);
+            int numSamples = amount * 2;
             data.shortArray = new short[numSamples];
             int amplitude = 32760 / 15;
             // Fill the data array with sample data
@@ -49,7 +49,7 @@ namespace hybridEncryptor
                     {
                         double freq = 440.0f;   // Concert A: 440Hz
                         double t = (Math.PI * 2 * freq) / (format.dwSamplesPerSec * format.wChannels);
-                        for (uint i = 0; i < numSamples - 1; i += 2)
+                        for (int i = 0; i < numSamples - 1; i += 2)
                         {
                             for (int channel = 0; channel < format.wChannels; channel++)
                             {
@@ -69,7 +69,7 @@ namespace hybridEncryptor
                     {
                         double freq = 440.0f;   // Concert A: 440Hz
                         double t = (Math.PI * 2 * freq) / (format.dwSamplesPerSec * format.wChannels);
-                        for (uint i = 0; i < numSamples - 1; i += 2)
+                        for (int i = 0; i < numSamples - 1; i += 2)
                         {
                             for (int channel = 0; channel < format.wChannels; channel++)
                             {
@@ -82,7 +82,7 @@ namespace hybridEncryptor
                     {
                         Random rnd = new Random();
                         short randomValue = 0;
-                        for (uint i = 0; i < numSamples - 1; i += 2)
+                        for (int i = 0; i < numSamples - 1; i += 2)
                         {
                             for (int channel = 0; channel < format.wChannels; channel++)
                             {
@@ -93,7 +93,7 @@ namespace hybridEncryptor
                         break;
                     }
             }
-            data.dwChunkSize = (uint)(data.shortArray.Length * (format.wBitsPerSample / 8));
+            data.dwChunkSize = (int)(data.shortArray.Length * (format.wBitsPerSample / 8));
         }
         public override byte[] GetData()
         {
@@ -140,7 +140,7 @@ namespace hybridEncryptor
 
                 pos += 4;
             }
-            data.dwChunkSize = (uint)(data.shortArray.Length * (format.wBitsPerSample / 8));
+            data.dwChunkSize = (int)(data.shortArray.Length * (format.wBitsPerSample / 8));
             
         }
 
@@ -172,7 +172,7 @@ namespace hybridEncryptor
             }
 
             writer.Seek(4, SeekOrigin.Begin);
-            uint filesize = (uint)writer.BaseStream.Length;
+            int filesize = (int)writer.BaseStream.Length;
             writer.Write(filesize - 8);
 
             writer.Close();
@@ -184,7 +184,7 @@ namespace hybridEncryptor
             public class WaveHeader
             {
                 public string sGroupID; // RIFF
-                public uint dwFileLength; // total file length minus 8, which is taken up by RIFF
+                public int dwFileLength; // total file length minus 8, which is taken up by RIFF
                 public string sRiffType; // always WAVE
 
                 /// <summary>
@@ -200,11 +200,11 @@ namespace hybridEncryptor
             public class WaveFormatChunk
             {
                 public string sChunkID;         // Four bytes: "fmt "
-                public uint dwChunkSize;        // Length of header in bytes
+                public int dwChunkSize;        // Length of header in bytes
                 public ushort wFormatTag;       // 1 (MS PCM)
                 public ushort wChannels;        // Number of channels
-                public uint dwSamplesPerSec;    // Frequency of the audio in Hz... 44100
-                public uint dwAvgBytesPerSec;   // for estimating RAM allocation
+                public int dwSamplesPerSec;    // Frequency of the audio in Hz... 44100
+                public int dwAvgBytesPerSec;   // for estimating RAM allocation
                 public ushort wBlockAlign;      // sample frame size, in bytes
                 public ushort wBitsPerSample;    // bits per sample
 
@@ -229,7 +229,7 @@ namespace hybridEncryptor
             public class WaveDataChunk
             {
                 public string sChunkID;     // "data"
-                public uint dwChunkSize;    // Length of header in bytes
+                public int dwChunkSize;    // Length of header in bytes
                 public short[] shortArray;  // 8-bit audio
 
                 /// <summary>

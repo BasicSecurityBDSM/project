@@ -8,16 +8,19 @@ namespace hybridEncryptor
     class HybridEncryptor_tests
     {
         private HybridEncryptor hybrid;
+        Random random;
+        byte[] testFile;
         [SetUp]
         public void setup()
         {
             hybrid = new HybridEncryptor();
+            random = new Random();
+            testFile = new byte[(int)Math.Pow(1, 1)];
+            random.NextBytes(testFile);
         }
         [Test]
         public void HybridEncryptAndDecrypt_hash()
         {
-            string testString = "dit is een teststring";
-            byte[] testFile = Encoding.ASCII.GetBytes(testString);
             string senderPrivate = hybrid.GetRsaKey(true);
             string senderPublic = hybrid.GetRsaKey();
             hybrid.GenerateRsaKey();
@@ -28,7 +31,7 @@ namespace hybridEncryptor
             encrypted = hybrid.Encrypt(testFile,recieverPublic,senderPrivate);
 
             DecryptedFile decrypted;
-            decrypted = hybrid.Decrypt(encrypted,senderPrivate, recieverPrivate);
+            decrypted = hybrid.Decrypt(encrypted, senderPublic, recieverPrivate);
 
             Assert.IsTrue(decrypted.CompareHash(testFile));
             Assert.AreEqual(testFile, decrypted.GetFile());
@@ -36,8 +39,6 @@ namespace hybridEncryptor
         [Test]
         public void HybridEncryptAndDecrypt_hash_wavFile()
         {
-            string testString = "dit is een teststring";
-            byte[] testFile = Encoding.ASCII.GetBytes(testString);
             string senderPrivate = hybrid.GetRsaKey(true);
             string senderPublic = hybrid.GetRsaKey();
             hybrid.GenerateRsaKey();
@@ -56,8 +57,6 @@ namespace hybridEncryptor
         [Test]
         public void HybridEncryptAndDecrypt_hash_txtFile()
         {
-            string testString = "dit is een teststring";
-            byte[] testFile = Encoding.ASCII.GetBytes(testString);
             string senderPrivate = hybrid.GetRsaKey(true);
             string senderPublic = hybrid.GetRsaKey();
             hybrid.GenerateRsaKey();
@@ -76,8 +75,6 @@ namespace hybridEncryptor
         [Test]
         public void HybridEncryptAndDecrypt_hash_imgFile()
         {
-            string testString = "dit is een teststring";
-            byte[] testFile = Encoding.ASCII.GetBytes(testString);
             string senderPrivate = hybrid.GetRsaKey(true);
             string senderPublic = hybrid.GetRsaKey();
             hybrid.GenerateRsaKey();
@@ -96,8 +93,6 @@ namespace hybridEncryptor
         [Test]
         public void HybridEncryptAndDecrypt_hash_wavFile_SaveAndLoad()
         {
-            string testString = "dit is een teststring";
-            byte[] testFile = Encoding.ASCII.GetBytes(testString);
             string senderPrivate = hybrid.GetRsaKey(true);
             string senderPublic = hybrid.GetRsaKey();
             hybrid.GenerateRsaKey();
@@ -118,8 +113,6 @@ namespace hybridEncryptor
         [Test]
         public void HybridEncryptAndDecrypt_hash_txtFile_SaveAndLoad()
         {
-            string testString = "dit is een teststring";
-            byte[] testFile = Encoding.ASCII.GetBytes(testString);
             string senderPrivate = hybrid.GetRsaKey(true);
             string senderPublic = hybrid.GetRsaKey();
             hybrid.GenerateRsaKey();
@@ -140,8 +133,6 @@ namespace hybridEncryptor
         [Test]
         public void HybridEncryptAndDecrypt_hash_imgFile_SaveAndLoad()
         {
-            string testString = "dit is een teststring";
-            byte[] testFile = Encoding.ASCII.GetBytes(testString);
             string senderPrivate = hybrid.GetRsaKey(true);
             string senderPublic = hybrid.GetRsaKey();
             hybrid.GenerateRsaKey();
