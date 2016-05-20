@@ -1,0 +1,22 @@
+﻿<Window x:Class="Encryption.Decrypteer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Encryption"
+        mc:Ignorable="d"
+        Title="Decrypteer" Height="227.113" Width="326.381" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+    <Grid>
+        <Label x:Name="lblKey" Content="DesKey file" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblIV" Content="DesIV file" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblHash" Content="Hash file" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblFile" Content="Versleutelde file" HorizontalAlignment="Left" Margin="10,87,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnKey" Content="Browse..." HorizontalAlignment="Left" Margin="107,13,0,0" VerticalAlignment="Top" Width="75" Click="btn_key_Click"/>
+        <Button x:Name="btnIV" Content="Browse..." HorizontalAlignment="Left" Margin="107,39,0,0" VerticalAlignment="Top" Width="75" Click="btn_IV_Click"/>
+        <Button x:Name="btnHash" Content="Browse..." HorizontalAlignment="Left" Margin="107,65,0,0" VerticalAlignment="Top" Width="75" Click="btn_hash_Click"/>
+        <Button x:Name="btnFile" Content="Browse..." HorizontalAlignment="Left" Margin="107,90,0,0" VerticalAlignment="Top" Width="75" Click="btn_file_Click"/>
+        <Button x:Name="btnVorige" Content="Vorige" Margin="10,163,0,0" Click="btn_vorige_Click" RenderTransformOrigin="-2.249,-0.292" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="153"/>
+        <Button x:Name="btnDecrypt" Content="decrypteer" Margin="10,133,0,0" Click="btn_decrypt_Click" RenderTransformOrigin="-2.249,-0.292" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="153"/>
+
+    </Grid>
+</Window>

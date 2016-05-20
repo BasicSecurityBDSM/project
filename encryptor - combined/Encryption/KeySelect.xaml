@@ -1,0 +1,23 @@
+﻿<Window x:Name="KeySelectWindow" x:Class="Encryption.KeySelect"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Encryption"
+        mc:Ignorable="d"
+        Title="Encrypteer" Height="126.202" Width="366.619" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+    <Grid Margin="0,0,0,1">
+        <GroupBox x:Name="grb_KeyFiles" Header="Files" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="82" Width="257">
+            <Grid>
+                <Label x:Name="lblUw" Content="uw keypair:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0,0,0"/>
+                <Label x:Name="lblHun" Content="hun public key:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,30,0,0"/>
+                <Button x:Name="btn_genereerKey" Content="Generate" HorizontalAlignment="Left" Margin="95,1,0,0" VerticalAlignment="Top" Width="64" Height="25" Click="btn_genereerKey_Click"/>
+                <Button x:Name="btn_ophalenKeys" Content="Haal op" HorizontalAlignment="Left" Margin="164,1,0,0" VerticalAlignment="Top" Width="71" Height="25" Click="btn_getPrivateA_Click"/>
+                <Button x:Name="btn_ophalenKeys_Copy1" Content="Haal op" HorizontalAlignment="Left" Margin="95,31,0,0" VerticalAlignment="Top" Width="140" Height="25" Click="btn_getPublicB_Click"/>
+
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btn_vorige" Content="Vorige" HorizontalAlignment="Left" Margin="272,67,0,0" VerticalAlignment="Top" Width="75" Click="btn_vorige_Click"/>
+        <Button x:Name="btn_volgende" Content="Volgende" HorizontalAlignment="Left" Margin="272,26,0,0" VerticalAlignment="Top" Width="75" Click="btn_volgende_Click"/>
+    </Grid>
+</Window>
