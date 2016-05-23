@@ -27,15 +27,26 @@ namespace hybridEncryptor
         {
             RSA.FromXmlString(xmlString);
         }
-        public byte[] Encrypt(byte[] dataToEncrypt)
+        public byte[] Encrypt(byte[] dataToEncrypt, bool includePrivate = true)
         {
-            return RSAEncrypt(dataToEncrypt, RSA.ExportParameters(false), false);
+            return RSAEncrypt(dataToEncrypt, RSA.ExportParameters(includePrivate), false);
         }
-        public byte[] Decrypt(byte[] dataToDecrypt)
+        public byte[] Decrypt(byte[] dataToDecrypt, bool includePrivate = true)
         {
-            return RSADecrypt(dataToDecrypt, RSA.ExportParameters(true), false);
+            return RSADecrypt(dataToDecrypt, RSA.ExportParameters(includePrivate), false);
         }
-
+        public byte[] Sign(byte[] dataToSign)
+        {
+            return RSA.SignData(dataToSign, new SHA1CryptoServiceProvider());
+        }
+        public bool Check(byte[] original,byte[] signature)
+        {
+            if (RSA.VerifyData(original,new SHA1CryptoServiceProvider(),signature))
+            {
+                return true;
+            }
+            return false;
+        }
         static public byte[] RSAEncrypt(byte[] DataToEncrypt, RSAParameters RSAKeyInfo, bool DoOAEPPadding)
         {
             try

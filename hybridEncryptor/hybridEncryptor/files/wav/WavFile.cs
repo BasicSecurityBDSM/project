@@ -43,15 +43,15 @@ namespace hybridEncryptor
             data.shortArray = new short[numSamples];
             int amplitude = 32760 / 15;
             // Fill the data array with sample data
-            switch (type)
+            double freq = 440.0f;   // Concert A: 440Hz
+            double t = (Math.PI * 2 * freq) / (format.dwSamplesPerSec * format.wChannels);
+            for (int i = 0; i < numSamples - 1; i += 2)
             {
-                case WavType.SineWave:
+                for (int channel = 0; channel < format.wChannels; channel++)
+                {
+                    switch (type)
                     {
-                        double freq = 440.0f;   // Concert A: 440Hz
-                        double t = (Math.PI * 2 * freq) / (format.dwSamplesPerSec * format.wChannels);
-                        for (int i = 0; i < numSamples - 1; i += 2)
-                        {
-                            for (int channel = 0; channel < format.wChannels; channel++)
+                        case WavType.SineWave:
                             {
                                 short oldInt = Convert.ToInt16(amplitude * Math.Sin(t * i));
                                 byte[] bytes = BitConverter.GetBytes(oldInt);
@@ -61,37 +61,23 @@ namespace hybridEncryptor
                                 }
                                 short newInt = BitConverter.ToInt16(bytes, 0);
                                 data.shortArray[i + channel] = newInt;
+                                break;
                             }
-                        }
-                        break;
-                    }
-                case WavType.BlockWave:
-                    {
-                        double freq = 440.0f;   // Concert A: 440Hz
-                        double t = (Math.PI * 2 * freq) / (format.dwSamplesPerSec * format.wChannels);
-                        for (int i = 0; i < numSamples - 1; i += 2)
-                        {
-                            for (int channel = 0; channel < format.wChannels; channel++)
+                        case WavType.BlockWave:
                             {
                                 data.shortArray[i + channel] = Convert.ToInt16(amplitude * Math.Sign(Math.Sin(t * i)));
+                                break;
                             }
-                        }
-                        break;
-                    }
-                case WavType.RandomWave:
-                    {
-                        Random rnd = new Random();
-                        short randomValue = 0;
-                        for (int i = 0; i < numSamples - 1; i += 2)
-                        {
-                            for (int channel = 0; channel < format.wChannels; channel++)
+                        case WavType.RandomWave:
                             {
+                                Random rnd = new Random();
+                                short randomValue = 0;
                                 randomValue = Convert.ToInt16(rnd.Next(-amplitude, amplitude));
                                 data.shortArray[i + channel] = randomValue;
+                                break;
                             }
-                        }
-                        break;
                     }
+                }
             }
             data.dwChunkSize = (int)(data.shortArray.Length * (format.wBitsPerSample / 8));
         }
@@ -132,19 +118,19 @@ namespace hybridEncryptor
                 left[0] = wav[pos];
                 left[1] = wav[pos + 1];
                 data.shortArray[i] = BitConverter.ToInt16(left, 0);
-           
+
                 byte[] right = new byte[2];
                 right[0] = wav[pos + 2];
                 right[1] = wav[pos + 3];
-                data.shortArray[i+1] = BitConverter.ToInt16(right, 0);
+                data.shortArray[i + 1] = BitConverter.ToInt16(right, 0);
 
                 pos += 4;
             }
             data.dwChunkSize = (int)(data.shortArray.Length * (format.wBitsPerSample / 8));
-            
+
         }
 
-        
+
         public override void Save(string filePath)
         {
             FileStream fileStream = new FileStream(filePath, FileMode.Create);

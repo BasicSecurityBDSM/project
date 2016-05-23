@@ -28,17 +28,16 @@ namespace hybridEncryptor
             //encrypt keys
             rsa.SetKey(OtherPublicKey);
             byte[] desKey = null;
-            Thread desKeyThread = new Thread(() => desKey = rsa.Encrypt(des.GetKey()));
+            Thread desKeyThread = new Thread(() => desKey = rsa.Encrypt(des.GetKey(),false));
             desKeyThread.Start();
             byte[] desIV = null;
-            Thread desIVThread = new Thread(() => desIV = rsa.Encrypt(des.GetIV()));
+            Thread desIVThread = new Thread(() => desIV = rsa.Encrypt(des.GetIV(), false));
             desIVThread.Start();
             desKeyThread.Join();
             desIVThread.Join();
             //encrypt hash
             rsa.SetKey(OwnPrivateKey);
-            byte[] hash = SHA1.Create().ComputeHash(fileToEncrypt);
-            hash = rsa.Encrypt(hash);
+            byte[] hash = rsa.Sign(fileToEncrypt);
             //return file
             return new EncryptedFile(file,desKey,desIV,hash);
         }
@@ -61,7 +60,7 @@ namespace hybridEncryptor
             byte[] file = Convert.FromBase64String(stringFile);
             //decrypt hash
             rsa.SetKey(OtherPublicKey);
-            byte[] hash = rsa.Decrypt(fileToDecrypt.GetHash());
+            bool hash = rsa.Check(file,fileToDecrypt.GetHash());
             return new DecryptedFile(file,hash);
         }
         public void GenerateRsaKey()

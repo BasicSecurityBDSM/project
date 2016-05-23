@@ -98,7 +98,7 @@ namespace Encryption
                     break;
             }
             DecryptedFile decrypted = encryptor.Decrypt(encrypted,publicB,privateA);
-            if (decrypted.CompareHash(decrypted.GetFile()))
+            if (decrypted.GetHash())
             {
                 FileStream fileStream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\encrypted\\test.png", FileMode.Create);
                 BinaryWriter writer = new BinaryWriter(fileStream);

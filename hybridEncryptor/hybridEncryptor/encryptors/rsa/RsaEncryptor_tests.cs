@@ -26,7 +26,7 @@ namespace hybridEncryptor
             byte[] dataToEncrypt = ByteConverter.GetBytes(testString);
             rsa.generateNewKey();
             rsa.SetKey(publicKey);
-            byte[] encrypted = rsa.Encrypt(dataToEncrypt);
+            byte[] encrypted = rsa.Encrypt(dataToEncrypt,false);
             rsa.generateNewKey();
             rsa.SetKey(privateKey);
             byte[] decrypted = rsa.Decrypt(encrypted);

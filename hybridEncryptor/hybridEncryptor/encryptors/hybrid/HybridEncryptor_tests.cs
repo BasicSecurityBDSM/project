@@ -33,7 +33,7 @@ namespace hybridEncryptor
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encrypted, senderPublic, recieverPrivate);
 
-            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.IsTrue(decrypted.GetHash());
             Assert.AreEqual(testFile, decrypted.GetFile());
         }
         [Test]
@@ -51,7 +51,7 @@ namespace hybridEncryptor
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encrypted, senderPrivate, recieverPrivate);
 
-            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.IsTrue(decrypted.GetHash());
             Assert.AreEqual(testFile, decrypted.GetFile());
         }
         [Test]
@@ -69,7 +69,7 @@ namespace hybridEncryptor
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encrypted, senderPrivate, recieverPrivate);
 
-            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.IsTrue(decrypted.GetHash());
             Assert.AreEqual(testFile, decrypted.GetFile());
         }
         [Test]
@@ -87,7 +87,7 @@ namespace hybridEncryptor
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encrypted, senderPrivate, recieverPrivate);
 
-            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.IsTrue(decrypted.GetHash());
             Assert.AreEqual(testFile, decrypted.GetFile());
         }
         [Test]
@@ -107,7 +107,7 @@ namespace hybridEncryptor
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encryptedL, senderPrivate, recieverPrivate);
 
-            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.IsTrue(decrypted.GetHash());
             Assert.AreEqual(testFile, decrypted.GetFile());
         }
         [Test]
@@ -127,7 +127,7 @@ namespace hybridEncryptor
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encryptedL, senderPrivate, recieverPrivate);
 
-            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.IsTrue(decrypted.GetHash());
             Assert.AreEqual(testFile, decrypted.GetFile());
         }
         [Test]
@@ -147,7 +147,7 @@ namespace hybridEncryptor
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encryptedL, senderPrivate, recieverPrivate);
 
-            Assert.IsTrue(decrypted.CompareHash(testFile));
+            Assert.IsTrue(decrypted.GetHash());
             Assert.AreEqual(testFile, decrypted.GetFile());
         }
     }

@@ -9,9 +9,10 @@ namespace hybridEncryptor
 {
     public class DecryptedFile
     {
+        RsaEncryptor rsa;
         private byte[] file;
-        private byte[] hash;
-        public DecryptedFile(byte[] file, byte[] hash)
+        private bool hash;
+        public DecryptedFile(byte[] file, bool hash)
         {
             this.file = file;
             this.hash = hash;
@@ -20,10 +21,9 @@ namespace hybridEncryptor
         {
             return file;
         }
-        public bool CompareHash(byte[] fileToCompare)
+        public bool GetHash()
         {
-            byte[] compare = SHA1.Create().ComputeHash(fileToCompare);
-            return (compare.SequenceEqual(hash));
+            return hash;
         }
     }
 }
