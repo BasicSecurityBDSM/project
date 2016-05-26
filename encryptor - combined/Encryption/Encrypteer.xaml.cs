@@ -39,6 +39,7 @@ namespace Encryption
 
         private void btn_browse_Click(object sender, RoutedEventArgs e)
         {
+            //file ophalen 
             var browsed = browseFile();
             file = browsed.Item2;
             cmb_enc.IsEnabled = true;
@@ -47,11 +48,13 @@ namespace Encryption
 
         private void cmb_enc_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //encrpytie typekiezen
             cmb_enc.IsEnabled = false;
             btn_encrypteer.IsEnabled = true;
         }
         private void btn_encrypteer_Click(object sender, RoutedEventArgs e)
         {
+            //kijken welke optie geselecteerd is en afhankleijk daarvan de file aanmaken
             EncryptedFile encrypted = encryptor.Encrypt(file,publicB,privateA);
             switch (cmb_enc.SelectedIndex)
             {
@@ -65,12 +68,15 @@ namespace Encryption
                     encrypted = ImgEncryptedFile.FromEncryptedFile(encrypted);
                     break;
             }
+            //file opslaan
             encrypted.save(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
+            //melding weergeven en explorer openen op de locatie van de files
             System.Windows.MessageBox.Show("de files zijn gesaved onder:" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
             Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
         }
         private Tuple<string, byte[]> browseFile()
         {
+            //tuple returnen met path en inhoud van file
             OpenFileDialog fd = new OpenFileDialog();
 
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

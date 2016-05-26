@@ -28,6 +28,7 @@ namespace Encryption
 
         private string browseFile()
         {
+            //file path ophalen
             OpenFileDialog fd = new OpenFileDialog();
 
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -57,20 +58,26 @@ namespace Encryption
 
         private void btn_genereerKey_Click(object sender, RoutedEventArgs e)
         {
+            //nieuwe key gennen en ophalen
             encryptor.GenerateRsaKey();
             privateA = encryptor.GetRsaKey(true);
+            //naam vragen voor keys
             string filename = Interaction.InputBox("geef een naam voor de keys", "key naam", "myKey");
+            //map aanmaken als die er niet is
             Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys");
+            //private key opslaan
             using (StreamWriter file = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys\\private_"+filename))
             {
                 file.WriteLine(privateA);
                 file.Close();
             }
+            //public key opslaan
             using (StreamWriter file = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys\\public_"+filename))
             {
                 file.WriteLine(encryptor.GetRsaKey(false));
                 file.Close();
             }
+            //melding weergeven en explorer openen op locatie van de files
             System.Windows.MessageBox.Show("de files zijn gesaved onder:" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys");
             Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys");
             lblUw.Background = Brushes.Green;
@@ -106,6 +113,7 @@ namespace Encryption
 
         private void btn_volgende_Click(object sender, RoutedEventArgs e)
         {
+            //checken welke optie er in de startmenu gekozen is en dan die starten
             if (next)
             {
                 new Encrypteer(encryptor, privateA, publicB).Show();
