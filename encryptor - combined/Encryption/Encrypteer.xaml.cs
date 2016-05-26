@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using hybridEncryptor;
+using System.Diagnostics;
 
 namespace Encryption
 {
@@ -66,6 +67,7 @@ namespace Encryption
             }
             encrypted.save(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
             System.Windows.MessageBox.Show("de files zijn gesaved onder:" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
+            Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
         }
         private Tuple<string, byte[]> browseFile()
         {

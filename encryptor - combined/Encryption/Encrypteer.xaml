@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Encryption"
         mc:Ignorable="d"
-        Title="UploadMessage" Height="222.742" Width="316.054" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Encrypteer" Height="222.742" Width="316.054" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="btn_browse" Content="Selecteer een te encrypteren bestand" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" Height="30" Click="btn_browse_Click"/>
         <ComboBox x:Name="cmb_enc" HorizontalAlignment="Left" Margin="116,55,0,0" VerticalAlignment="Top" Width="166" Height="26" SelectionChanged="cmb_enc_SelectionChanged">

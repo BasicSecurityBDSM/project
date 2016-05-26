@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using hybridEncryptor;
 using Microsoft.VisualBasic;
 using System.Diagnostics;
+using System.Windows.Media;
 
 namespace Encryption
 {
@@ -16,16 +17,17 @@ namespace Encryption
         private HybridEncryptor encryptor;
         private string privateA;
         private string publicB;
-        string keyPath;
-        string IVPath;
-        string HashPath;
-        string FilePath;
+        string keyPath = null;
+        string IVPath = null;
+        string HashPath = null;
+        string FilePath = null;
         public Decrypteer(HybridEncryptor encryptor, string privateA, string publicB)
         {
             InitializeComponent();
             this.encryptor = encryptor;
             this.privateA = privateA;
             this.publicB = publicB;
+            btnDecrypt.IsEnabled = false;
         }
 
         private Tuple<string, byte[]> browseFile()
@@ -60,23 +62,36 @@ namespace Encryption
         private void btn_key_Click(object sender, RoutedEventArgs e)
         {
             keyPath = browseFile().Item1;
+            lblKey.Background = Brushes.Green;
+            unlock();
         }
 
         private void btn_IV_Click(object sender, RoutedEventArgs e)
         {
             IVPath = browseFile().Item1;
+            lblIV.Background = Brushes.Green;
+            unlock();
         }
 
         private void btn_hash_Click(object sender, RoutedEventArgs e)
         {
             HashPath = browseFile().Item1;
+            lblHash.Background = Brushes.Green;
+            unlock();
         }
 
         private void btn_file_Click(object sender, RoutedEventArgs e)
         {
             FilePath = browseFile().Item1;
+            lblFile.Background = Brushes.Green;
+            unlock();
         }
-
+        private void unlock(){
+            if (keyPath != null && IVPath != null && FilePath != null && HashPath != null)
+            {
+                btnDecrypt.IsEnabled = true;
+            }
+        }
         private void btn_vorige_Click(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();
@@ -106,6 +121,8 @@ namespace Encryption
                 FileStream fileStream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\encrypted\\"+filename, FileMode.Create);
                 BinaryWriter writer = new BinaryWriter(fileStream);
                 writer.Write(decrypted.GetFile());
+                writer.Close();
+                fileStream.Close();
                 System.Windows.MessageBox.Show("de file is gesaved onder:" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
                 Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
             }

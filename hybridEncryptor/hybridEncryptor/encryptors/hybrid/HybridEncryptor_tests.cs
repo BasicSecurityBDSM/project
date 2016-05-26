@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.IO;
 using System.Text;
 
 namespace hybridEncryptor
@@ -10,6 +11,7 @@ namespace hybridEncryptor
         private HybridEncryptor hybrid;
         Random random;
         byte[] testFile;
+        string path;
         string senderPrivate; string senderPublic;
         string recieverPrivate; string recieverPublic;
         [SetUp]
@@ -27,6 +29,9 @@ namespace hybridEncryptor
             hybrid.GenerateRsaKey();
             recieverPrivate = hybrid.GetRsaKey(true);
             recieverPublic = hybrid.GetRsaKey();
+            //set the path and create the folder
+            path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\testfiles";
+            Directory.CreateDirectory(path);
         }
         [Test]
         public void HybridEncryptAndDecrypt_hash()
@@ -87,10 +92,10 @@ namespace hybridEncryptor
             WavEncryptedFile encryptedS;
             encryptedS = WavEncryptedFile.FromEncryptedFile(hybrid.Encrypt(testFile, recieverPublic, senderPrivate));
             //save the file
-            encryptedS.save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            encryptedS.save(path);
             //load the file
             WavEncryptedFile encryptedL;
-            encryptedL = new WavEncryptedFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            encryptedL = new WavEncryptedFile(path);
             //decrypt the file
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encryptedL, senderPublic, recieverPrivate);
@@ -105,10 +110,10 @@ namespace hybridEncryptor
             TxtEncryptedFile encryptedS;
             encryptedS = TxtEncryptedFile.FromEncryptedFile(hybrid.Encrypt(testFile, recieverPublic, senderPrivate));
             //save the file
-            encryptedS.save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            encryptedS.save(path);
             //load the file
             TxtEncryptedFile encryptedL;
-            encryptedL = new TxtEncryptedFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            encryptedL = new TxtEncryptedFile(path);
             //decrypt the file
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encryptedL, senderPublic, recieverPrivate);
@@ -123,10 +128,10 @@ namespace hybridEncryptor
             ImgEncryptedFile encryptedS;
             encryptedS = ImgEncryptedFile.FromEncryptedFile(hybrid.Encrypt(testFile, recieverPublic, senderPrivate));
             //save the file
-            encryptedS.save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            encryptedS.save(path);
             //load the file
             ImgEncryptedFile encryptedL;
-            encryptedL = new ImgEncryptedFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+            encryptedL = new ImgEncryptedFile(path);
             //decrypt the file
             DecryptedFile decrypted;
             decrypted = hybrid.Decrypt(encryptedL, senderPublic, recieverPrivate);
