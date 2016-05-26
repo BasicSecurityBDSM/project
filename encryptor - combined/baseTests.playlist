@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="hybridEncryptor.RsaEncyptor_tests.RsaKeyGenTest" /><Add Test="hybridEncryptor.RsaEncyptor_tests.RsaEncrpytAndDecryptTest" /><Add Test="hybridEncryptor.DesEncyptor_tests.DesEncrpytAndDecryptTest" /><Add Test="hybridEncryptor.HybridEncryptor_tests.HybridEncryptAndDecrypt_hash" /></Playlist>

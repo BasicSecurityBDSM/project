@@ -14,6 +14,7 @@ namespace hybridEncryptor
         Image image;
         public override void Generate(byte[] dataToInsert)
         {
+            //split the bytes into bits
             byte[] bitsToInsert = new byte[(dataToInsert.Length) * 8];
             for (int i = 0; i < dataToInsert.Length; i += 1)
             {
@@ -24,12 +25,15 @@ namespace hybridEncryptor
                     bitsToInsert[i * 8 + j] = holder;
                 }
             }
+            //create the image
             int width = bitsToInsert.Length;
             int height = 1;
             int stride = width * 4;
             byte[] pixels = new byte[width*height*4];
+            //fill image with random colors
             Random random = new Random();
             random.NextBytes(pixels);
+            //put the bits into the first rgb value of each pixel
             for (int i = 0; i < pixels.Length; i+=4)
             {
                 byte holder = pixels[i];

@@ -24,6 +24,7 @@ namespace hybridEncryptor
         }
         public void Generate(byte[] dataToInsert, WavType type)
         {
+            //split the bytes into bits
             byte[] bitsToInsert = new byte[(dataToInsert.Length) * 8];
             for (int i = 0; i < dataToInsert.Length; i += 1)
             {
@@ -41,7 +42,7 @@ namespace hybridEncryptor
             int amount = Convert.ToInt32(bitsToInsert.Length);
             int numSamples = amount * 2;
             data.shortArray = new short[numSamples];
-            int amplitude = 32760 / 15;
+            short amplitude = 32760 / 15;
             // Fill the data array with sample data
             double freq = 440.0f;   // Concert A: 440Hz
             double t = (Math.PI * 2 * freq) / (format.dwSamplesPerSec * format.wChannels);
@@ -57,6 +58,7 @@ namespace hybridEncryptor
                                 byte[] bytes = BitConverter.GetBytes(oldInt);
                                 if (channel == 0)
                                 {
+                                    //put data only on the left channel
                                     bytes[0] = (byte)(bytes[0] ^ bitsToInsert[i / 2]);
                                 }
                                 short newInt = BitConverter.ToInt16(bytes, 0);
@@ -65,7 +67,23 @@ namespace hybridEncryptor
                             }
                         case WavType.BlockWave:
                             {
-                                data.shortArray[i + channel] = Convert.ToInt16(amplitude * Math.Sign(Math.Sin(t * i)));
+                                short oldInt;
+                                if (Convert.ToInt16(amplitude * Math.Sign(Math.Sin(t * i)))>0)
+                                {
+                                    oldInt = amplitude;
+                                }
+                                else
+                                {
+                                    oldInt = (short)(-amplitude); 
+                                }
+                                byte[] bytes = BitConverter.GetBytes(oldInt);
+                                if (channel == 0)
+                                {
+                                    //put data only on the left channel
+                                    bytes[0] = (byte)(bytes[0] ^ bitsToInsert[i / 2]);
+                                }
+                                short newInt = BitConverter.ToInt16(bytes, 0);
+                                data.shortArray[i + channel] = newInt;
                                 break;
                             }
                         case WavType.RandomWave:

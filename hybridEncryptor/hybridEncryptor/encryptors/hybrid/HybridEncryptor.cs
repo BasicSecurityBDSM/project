@@ -18,7 +18,6 @@ namespace hybridEncryptor
         {
             des = new DesEncryptor();
             rsa = new RsaEncryptor();
-            
         }
         public EncryptedFile Encrypt(byte[] fileToEncrypt,string OtherPublicKey,string OwnPrivateKey)
         {

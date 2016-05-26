@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Forms;
 using hybridEncryptor;
 using System.Windows.Media;
+using Microsoft.VisualBasic;
+using System.Diagnostics;
 
 namespace Encryption
 {
@@ -41,7 +43,7 @@ namespace Encryption
                         fd.InitialDirectory = path;
                     }
                     else {
-                        fd.InitialDirectory = @"C:\";
+                        fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                     }
                     output = File.ReadAllText(file);
                 }
@@ -57,18 +59,20 @@ namespace Encryption
         {
             encryptor.GenerateRsaKey();
             privateA = encryptor.GetRsaKey(true);
+            string filename = Interaction.InputBox("geef een naam voor de keys", "key naam", "myKey");
             Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys");
-            using (StreamWriter file = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys\\private_A"))
+            using (StreamWriter file = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys\\private_"+filename))
             {
                 file.WriteLine(privateA);
                 file.Close();
             }
-            using (StreamWriter file = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys\\public_A"))
+            using (StreamWriter file = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys\\public_"+filename))
             {
                 file.WriteLine(encryptor.GetRsaKey(false));
                 file.Close();
             }
             System.Windows.MessageBox.Show("de files zijn gesaved onder:" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys");
+            Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted\\keys");
             lblUw.Background = Brushes.Green;
             Unlock();
         }

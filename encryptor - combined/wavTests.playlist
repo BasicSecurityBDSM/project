@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="hybridEncryptor.HybridEncryptor_tests.HybridEncryptAndDecrypt_hash_wavFile_SaveAndLoad" /><Add Test="hybridEncryptor.File_Tests.WavFileData" /><Add Test="hybridEncryptor.HybridEncryptor_tests.HybridEncryptAndDecrypt_hash_wavFile" /><Add Test="hybridEncryptor.File_Tests.WavFileData_SaveAndLoad" /></Playlist>

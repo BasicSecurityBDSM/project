@@ -3,6 +3,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using hybridEncryptor;
+using Microsoft.VisualBasic;
+using System.Diagnostics;
 
 namespace Encryption
 {
@@ -100,9 +102,16 @@ namespace Encryption
             DecryptedFile decrypted = encryptor.Decrypt(encrypted,publicB,privateA);
             if (decrypted.GetHash())
             {
-                FileStream fileStream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\encrypted\\test.png", FileMode.Create);
+                string filename = Interaction.InputBox("geef een naam voor het bestand", "bestandsnaam","decrypted");
+                FileStream fileStream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\encrypted\\"+filename, FileMode.Create);
                 BinaryWriter writer = new BinaryWriter(fileStream);
                 writer.Write(decrypted.GetFile());
+                System.Windows.MessageBox.Show("de file is gesaved onder:" + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
+                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\encrypted");
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("hash niet geldig");
             }
         }
     }

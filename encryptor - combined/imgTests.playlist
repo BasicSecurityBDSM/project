@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="hybridEncryptor.HybridEncryptor_tests.HybridEncryptAndDecrypt_hash_imgFile" /><Add Test="hybridEncryptor.File_Tests.ImgFileData" /><Add Test="hybridEncryptor.HybridEncryptor_tests.HybridEncryptAndDecrypt_hash_imgFile_SaveAndLoad" /><Add Test="hybridEncryptor.File_Tests.ImgFileData_SaveAndLoad" /></Playlist>
